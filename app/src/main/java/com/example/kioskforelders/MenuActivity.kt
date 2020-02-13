@@ -1,9 +1,11 @@
 package com.example.kioskforelders
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import kotlinx.android.synthetic.main.activity_menu.*
 
 class MenuActivity : AppCompatActivity() {
 
@@ -19,6 +21,11 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        layout_menuActivity_total.setOnClickListener {
+            val intent = Intent(this, Ordercheck::class.java)
+            startActivity(intent)
+        }
     }
 
     /** 풀 스크린 만들기 */

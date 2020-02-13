@@ -4,6 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Ordercheck">
+    tools:context=".Ordercheck"
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/iv_mainActivity_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img_logo"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="주문 확인"
+        android:textSize="40sp"
+        android:textColor="#0A6B22"
+        android:fontFamily="@font/americanob" />
+
+    <ImageView
+        android:id="@+id/iv_orderCheckActivity_bilge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_orderCheckActivity_title"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/img_bilge"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_burgur"
+        app:layout_constraintStart_toStartOf="@+id/iv_orderCheckActivity_bilge"
+        app:layout_constraintTop_toTopOf="@+id/iv_orderCheckActivity_bilge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="빅맥"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
