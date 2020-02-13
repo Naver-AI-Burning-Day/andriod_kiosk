@@ -1,10 +1,15 @@
 package com.example.kioskforelders.csr
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.View
 import androidx.annotation.WorkerThread
+import androidx.core.content.ContextCompat.startActivity
+import com.example.kioskforelders.MenuActivity
+import com.example.kioskforelders.OrdercheckActivity
 import com.example.kioskforelders.R
 import com.example.kioskforelders.data.request.requestOrder
 import com.example.kioskforelders.data.response.responseOrder
@@ -30,10 +35,11 @@ class NaverRecognizer : SpeechRecognitionListener{
     private var mHandler: Handler? = null
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var csrResult: String
+    var context: Context
 
     constructor(context: Context, handler: Handler, clientId: String) {
         this.mHandler = handler
-
+        this.context = context
         try {
             mRecognizer = SpeechRecognizer(context, clientId)
         } catch (e: SpeechRecognitionException) {
@@ -77,6 +83,7 @@ class NaverRecognizer : SpeechRecognitionListener{
         val msg = Message.obtain(mHandler, R.id.finalResult, finalResult)
         msg.sendToTarget()
         csrResult = finalResult?.results?.get(0).toString()
+        Log.d("chohee", "서버 녹음 전")
 
     }
 
@@ -120,7 +127,9 @@ class NaverRecognizer : SpeechRecognitionListener{
                     response: Response<responseOrder>
                 ) {
                     Log.d("requestOrder 서버 통신 ", "성공")
-                    Log.d("requestOrder 서버 통신 ", response.body()?.toString())
+                    Log.d("chohee", context.toString())
+                    val intent = Intent(context, OrdercheckActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
         )

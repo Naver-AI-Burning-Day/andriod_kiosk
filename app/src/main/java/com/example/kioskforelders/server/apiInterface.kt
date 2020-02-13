@@ -16,4 +16,8 @@ interface apiInterface {
     //CSR 추출 텍스트 보내기
     @POST("/send")
     fun requestOrder(@Body body: requestOrder): Call<responseOrder>
+
+    //바이너리 파일 요청
+    @POST("/tts")
+    fun requestBinary()
 }
