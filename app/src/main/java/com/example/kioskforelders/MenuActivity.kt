@@ -98,12 +98,10 @@ class MenuActivity : AppCompatActivity(){
         }
     }
 
-    //@SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         initNaverRecognizer()
-
 
 
     }
@@ -125,7 +123,6 @@ class MenuActivity : AppCompatActivity(){
         }else{
             Log.d(TAG, "stop and wait Final Result")
             naverRecognizer.getSpeechRecognizer().stop()
-
         }
     }
 
@@ -133,6 +130,7 @@ class MenuActivity : AppCompatActivity(){
         super.onResume()
         deleteStatusBar()
         strResult = ""
+
 
     }
 

@@ -13,6 +13,7 @@ import com.naver.speech.clientapi.SpeechRecognitionException
 import com.naver.speech.clientapi.SpeechRecognitionListener
 import com.naver.speech.clientapi.SpeechRecognitionResult
 import com.naver.speech.clientapi.SpeechRecognizer
+
 //import retrofit2.Retrofit
 
 
@@ -61,16 +62,16 @@ class NaverRecognizer : SpeechRecognitionListener{
         } catch (e: SpeechRecognitionException) {
             e.printStackTrace()
         }
-
     }
 
     @WorkerThread
     override fun onResult(finalResult: SpeechRecognitionResult?) {
-        Log.d("chohee", "온리절트")
         Log.d(TAG, "Final Result!! (" + finalResult?.results?.get(0) + ")")
         val msg = Message.obtain(mHandler, R.id.finalResult, finalResult)
         msg.sendToTarget()
         csrResult = finalResult?.results?.get(0).toString()
+
+
 
     }
 
