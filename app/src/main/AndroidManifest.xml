@@ -23,9 +23,6 @@
         <activity android:name=".MenuFragment3"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".DrinkActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".OrdersuccessActivity"
             android:configChanges="orientation|keyboardHidden"

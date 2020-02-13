@@ -107,24 +107,23 @@ class NaverRecognizer : SpeechRecognitionListener{
 
         /** 사용자 발성 완료 후 CSR로 추출된 텍스트를 서버로 보내기 (서버 통신)
          * --> body에 userId와 CSR로 추출된 데이터를 보냄 */
-//        val call: Call<responseOrder> = ServiceImplement.service.requestOrder(requestOrder(
-//            SingletonData.userId, csrResult
-//        ))
-//        call.enqueue(
-//            object : Callback<responseOrder>{
-//                override fun onFailure(call: Call<responseOrder>, t: Throwable) {
-//                    Log.d("requestOrder 서버 통신 ", "실패")
-//                }
-//
-//                override fun onResponse(
-//                    call: Call<responseOrder>,
-//                    response: Response<responseOrder>
-//                ) {
-//                    Log.d("requestOrder 서버 통신 ", "성공")
-//                    Log.d("requestOrder 서버 통신 ", response.body()?.toString())
-//                }
-//            }
-//        )
+        val call: Call<responseOrder> = ServiceImplement.service.requestOrder(requestOrder(
+            SingletonData.userId, csrResult
+        ))
+        call.enqueue(
+            object : Callback<responseOrder>{
+                override fun onFailure(call: Call<responseOrder>, t: Throwable) {
+                    Log.d("requestOrder 서버 통신 ", "실패")
+                }
+                override fun onResponse(
+                    call: Call<responseOrder>,
+                    response: Response<responseOrder>
+                ) {
+                    Log.d("requestOrder 서버 통신 ", "성공")
+                    Log.d("requestOrder 서버 통신 ", response.body()?.toString())
+                }
+            }
+        )
     }
 
     @WorkerThread
