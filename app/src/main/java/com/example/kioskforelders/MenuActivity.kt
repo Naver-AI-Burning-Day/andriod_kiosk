@@ -1,13 +1,11 @@
 package com.example.kioskforelders
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity() {
 
     /** 풀 스크린 만들기 변수 세팅 */
     lateinit var decorView: View
@@ -15,17 +13,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        deleteStatusBar() // onCreate 전에 풀 스크린 세팅하기
+        deleteStatusBar()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        layout_mainActivity_order.setOnClickListener {
-            var intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-        }
+        setContentView(R.layout.activity_menu)
     }
 
     /** 풀 스크린 만들기 */

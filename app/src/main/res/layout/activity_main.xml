@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_mainActivity_total"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="주문"
-            android:textSize="60dp"
+            android:textSize="60sp"
             android:textColor="#0A6B22"
             android:fontFamily="@font/americanob" />
 
@@ -45,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="을 시작할까요?"
-            android:textSize="40dp"
+            android:textSize="40sp"
             android:textColor="#000000"
             android:fontFamily="@font/americanol"/>
 
@@ -72,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="화면을 눌러주세요!"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textColor="#000000"
         android:fontFamily="@font/americanol"/>
 
