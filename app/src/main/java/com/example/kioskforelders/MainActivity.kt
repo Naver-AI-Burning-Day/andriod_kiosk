@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.kioskforelders.data.request.responseStart
+import com.example.kioskforelders.data.response.responseStart
 import com.example.kioskforelders.server.ServiceInplement
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
