@@ -22,10 +22,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        layout_mainActivity_order.setOnClickListener {
+        /** 화면 터치시 메뉴 화면으로 넘기기 */
+        layout_mainActivity_total.setOnClickListener {
             var intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
+
     }
 
     /** 풀 스크린 만들기 */
