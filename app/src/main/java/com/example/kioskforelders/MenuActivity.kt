@@ -24,9 +24,14 @@ import com.naver.speech.clientapi.SpeechConfig.EndPointDetectType
 import com.naver.speech.clientapi.SpeechRecognitionResult
 import java.lang.ref.WeakReference
 import java.util.List
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 /************************/
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(){
 
     private val TAG = MainActivity::class.java.simpleName
     private val CLIENT_ID = "0q5uu7pl8k"
@@ -46,7 +51,6 @@ class MenuActivity : AppCompatActivity() {
         when (msg.what) {
             R.id.clientReady -> {
                 // Now an user can speak.
-                //txtResult?.text = "Connected"
                 writer = AudioWriterPCM(
                     Environment.getExternalStorageDirectory().absolutePath + "/NaverSpeechTest"
                 )
@@ -58,7 +62,6 @@ class MenuActivity : AppCompatActivity() {
             R.id.partialResult -> {
                 // Extract obj property typed with String.
                 strResult = msg.obj as String
-                //txtResult?.text = strResult
             }
 
             R.id.finalResult -> {
@@ -72,23 +75,15 @@ class MenuActivity : AppCompatActivity() {
                     strBuf.append("\n")
                 }
                 strResult = strBuf.toString()
-                //txtResult?.text = strResult
             }
 
             R.id.recognitionError -> {
                 writer?.close()
-
                 strResult = "Error code : " + msg.obj.toString()
-                //txtResult?.text = strResult
-                //btnHybridRecognize?.setText(R.string.str_start)
-                //btnHybridRecognize?.isEnabled = true
             }
 
             R.id.clientInactive -> {
                 writer?.close()
-
-                //btnHybridRecognize?.setText(R.string.str_start)
-                //btnHybridRecognize?.isEnabled = true
             }
 
             R.id.endPointDetectTypeSelected -> {
@@ -103,51 +98,42 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    //@SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        initNaverRecognizer()
 
-//        layout_menuActivity_total.setOnClickListener {
-//            val intent = Intent(this, Ordercheck::class.java)
-//            startActivity(intent)
-//        }
 
+
+    }
+
+    fun initNaverRecognizer() {
         handler = RecognitionHandler(this)
         naverRecognizer = NaverRecognizer(this, handler, CLIENT_ID)
-
-        if (!naverRecognizer.getSpeechRecognizer().isRunning) {
-            // Run SpeechRecongizer by calling recognize().
-            strResult = ""
-            //txtResult.text = "Connecting..."
-            //btnStart.setText(R.string.str_stop)
-            Log.d("chohee", "들어옴1")
-
-            //currentEpdType = EndPointDetectType.HYBRID
-            //isEpdTypeSelected = false
-            naverRecognizer.recognize()
-            Log.d("chohee", "들어옴2")
-        }else{
-            Log.d(TAG, "stop and wait Final Result")
-            //btnStart.isEnabled = false
-            naverRecognizer.getSpeechRecognizer().stop()
-            //txtResult.text = "음성 인식 끝"
-        }
 
     }
 
     override fun onStart() {
         super.onStart()
         naverRecognizer.getSpeechRecognizer().initialize()
+        if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+            // Run SpeechRecongizer by calling recognize().
+            strResult = ""
+            isEpdTypeSelected = false
+            naverRecognizer.recognize()
+        }else{
+            Log.d(TAG, "stop and wait Final Result")
+            naverRecognizer.getSpeechRecognizer().stop()
+
+        }
     }
 
     override fun onResume() {
         super.onResume()
         deleteStatusBar()
         strResult = ""
-        //txtResult?.text = ""
-        //btnHybridRecognize?.setText(R.string.str_start)
-        //btnHybridRecognize?.isEnabled = true
+
     }
 
     override fun onStop() {
@@ -156,14 +142,13 @@ class MenuActivity : AppCompatActivity() {
     }
 
     // SpeechRecognizer 클래스를 쓰레드로 만들고 이 쓰레드를 핸들링하는 핸들러를 정의하는 것
-// Declare handler for handling SpeechRecognizer thread's Messages.
+    // Declare handler for handling SpeechRecognizer thread's Messages.
     internal class RecognitionHandler(activity: MenuActivity) : Handler() {
         private val mActivity: WeakReference<MenuActivity>
 
         init {
             mActivity = WeakReference(activity)
         }
-
         override fun handleMessage(msg: Message) {
             val activity = mActivity.get()
             activity?.handleMessage(msg)

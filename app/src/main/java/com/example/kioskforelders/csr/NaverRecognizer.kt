@@ -29,6 +29,7 @@ class NaverRecognizer : SpeechRecognitionListener{
         try {
             mRecognizer = SpeechRecognizer(context, clientId)
         } catch (e: SpeechRecognitionException) {
+
             // 예외가 발생하는 경우는 아래와 같습니다.
             //   1. activity 파라미터가 올바른 MainActivity의 인스턴스가 아닙니다.
             //   2. AndroidManifest.xml에서 package를 올바르게 등록하지 않았습니다.
@@ -41,6 +42,7 @@ class NaverRecognizer : SpeechRecognitionListener{
         }
 
         mRecognizer.setSpeechRecognitionListener(this)
+
     }
 
 
@@ -64,6 +66,7 @@ class NaverRecognizer : SpeechRecognitionListener{
 
     @WorkerThread
     override fun onResult(finalResult: SpeechRecognitionResult?) {
+        Log.d("chohee", "온리절트")
         Log.d(TAG, "Final Result!! (" + finalResult?.results?.get(0) + ")")
         val msg = Message.obtain(mHandler, R.id.finalResult, finalResult)
         msg.sendToTarget()
