@@ -1,6 +1,9 @@
 package com.example.kioskforelders
 
 
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,9 +18,16 @@ import android.util.Log
 import android.widget.Toast
 import com.example.kioskforelders.csr.AudioWriterPCM
 import com.example.kioskforelders.csr.NaverRecognizer
+import com.example.kioskforelders.data.request.requestMP3
+import com.example.kioskforelders.data.response.responseMP3
+import com.example.kioskforelders.server.ServiceImplement
 import com.naver.speech.clientapi.SpeechConfig.EndPointDetectType
 import com.naver.speech.clientapi.SpeechRecognitionResult
 import kotlinx.android.synthetic.main.activity_menu.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
 import java.lang.ref.WeakReference
 
 
@@ -99,10 +109,56 @@ class MenuActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        // 뷰 페이져 어댑터 세팅
         viewPager.adapter = MainActivity@adapter
-        initNaverRecognizer()
 
+        // "오늘의 추천 버거는~" 실행
+        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3("오늘의 추천메뉴는 슈슈버거와 불고기버거 입니다"))
+        call.enqueue(
+            object : Callback<responseMP3> {
+                override fun onFailure(call: Call<responseMP3>, t: Throwable) {
+                    Log.d("MP3서버" , "실패")
+                }
 
+                override fun onResponse(
+                    call: Call<responseMP3>,
+                    response: Response<responseMP3>
+                ) {
+                    Log.d("MP3서버" , "성공!")
+                    Log.d("MP3서버" , response.body().toString())
+                    val uri: Uri = Uri.parse(response.body()?.link)
+                    try {
+                        val mediaPlayer = MediaPlayer()
+                        mediaPlayer.setDataSource(this@MenuActivity, uri)
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                        mediaPlayer.start()
+
+                        // "추천버거 소리" 끝나면 녹음 시작
+                        while(true){
+                            if(mediaPlayer.isPlaying == false){
+                                initNaverRecognizer()
+                                naverRecognizer.getSpeechRecognizer().initialize()
+
+                                if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+                                    // Run SpeechRecongizer by calling recognize().
+                                    strResult = ""
+                                    isEpdTypeSelected = false
+                                    naverRecognizer.recognize()
+                                }else{
+                                    Log.d(TAG, "stop and wait Final Result")
+                                    naverRecognizer.getSpeechRecognizer().stop()
+                                }
+                                break
+                            }
+                        }
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        )
 
     }
 
@@ -114,24 +170,24 @@ class MenuActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
-        naverRecognizer.getSpeechRecognizer().initialize()
-        if (!naverRecognizer.getSpeechRecognizer().isRunning) {
-            // Run SpeechRecongizer by calling recognize().
-            strResult = ""
-            isEpdTypeSelected = false
-            naverRecognizer.recognize()
-        }else{
-            Log.d(TAG, "stop and wait Final Result")
-            naverRecognizer.getSpeechRecognizer().stop()
-        }
+//        initNaverRecognizer()
+//        naverRecognizer.getSpeechRecognizer().initialize()
+//
+//        if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+//            // Run SpeechRecongizer by calling recognize().
+//            strResult = ""
+//            isEpdTypeSelected = false
+//            naverRecognizer.recognize()
+//        }else{
+//            Log.d(TAG, "stop and wait Final Result")
+//            naverRecognizer.getSpeechRecognizer().stop()
+//        }
     }
 
     override fun onResume() {
         super.onResume()
         deleteStatusBar()
         strResult = ""
-
-
     }
 
     override fun onStop() {

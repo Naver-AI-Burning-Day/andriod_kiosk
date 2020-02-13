@@ -2,11 +2,16 @@ package com.example.kioskforelders
 
 
 import android.content.Intent
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.kioskforelders.data.request.requestMP3
+import com.example.kioskforelders.data.response.responseMP3
 import com.example.kioskforelders.data.response.responseStart
 import com.example.kioskforelders.server.ServiceImplement
 import com.example.kioskforelders.server.SingletonData
@@ -14,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +35,37 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3("안녕하세요 반갑습니다 화면을 눌러주세요"))
+        call.enqueue(
+            object : Callback<responseMP3> {
+                override fun onFailure(call: Call<responseMP3>, t: Throwable) {
+                    Log.d("MP3서버" , "실패")
+                }
+
+                override fun onResponse(
+                    call: Call<responseMP3>,
+                    response: Response<responseMP3>
+                ) {
+                    Log.d("MP3서버" , "성공!")
+                    Log.d("MP3서버" , response.body().toString())
+                    val uri: Uri = Uri.parse(response.body()?.link)
+                    try {
+                        val mediaPlayer = MediaPlayer()
+                        mediaPlayer.setDataSource(this@MainActivity, uri)
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                        mediaPlayer.start()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        )
+
 
         /** 화면 터치시 메뉴 화면으로 넘기기 */
         layout_mainActivity_total.setOnClickListener {

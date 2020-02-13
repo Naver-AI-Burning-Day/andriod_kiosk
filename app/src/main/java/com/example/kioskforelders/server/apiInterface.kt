@@ -1,6 +1,8 @@
 package com.example.kioskforelders.server
 
+import com.example.kioskforelders.data.request.requestMP3
 import com.example.kioskforelders.data.request.requestOrder
+import com.example.kioskforelders.data.response.responseMP3
 import com.example.kioskforelders.data.response.responseOrder
 import com.example.kioskforelders.data.response.responseStart
 import retrofit2.Call
@@ -17,7 +19,7 @@ interface apiInterface {
     @POST("/send")
     fun requestOrder(@Body body: requestOrder): Call<responseOrder>
 
-    //바이너리 파일 요청
+    //MP3 파일 요청
     @POST("/tts")
-    fun requestBinary()
+    fun requestMP3(@Body body: requestMP3) : Call<responseMP3>
 }

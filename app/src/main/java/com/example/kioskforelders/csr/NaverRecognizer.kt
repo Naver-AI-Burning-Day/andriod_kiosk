@@ -113,7 +113,7 @@ class NaverRecognizer : SpeechRecognitionListener{
         msg.sendToTarget()
 
         /** 사용자 발성 완료 후 CSR로 추출된 텍스트를 서버로 보내기 (서버 통신)
-         * --> body에 userId와 CSR로 추출된 데이터를 보냄 */
+         * --> body에 userId와 CSR로 추출된 데이터를 보냄 *****************************/
         val call: Call<responseOrder> = ServiceImplement.service.requestOrder(requestOrder(
             SingletonData.userId, csrResult
         ))
@@ -133,6 +133,7 @@ class NaverRecognizer : SpeechRecognitionListener{
                 }
             }
         )
+        /**********************************************************************************/
     }
 
     @WorkerThread

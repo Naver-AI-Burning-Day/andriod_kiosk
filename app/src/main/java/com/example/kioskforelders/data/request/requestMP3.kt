@@ -1,5 +1,5 @@
 package com.example.kioskforelders.data.request
 
-data class requestBinary (
+data class requestMP3 (
     val text: String
 )
