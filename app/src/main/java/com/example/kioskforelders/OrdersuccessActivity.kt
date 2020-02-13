@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 
-class Ordersuccess : AppCompatActivity() {
+class OrdersuccessActivity : AppCompatActivity() {
 
     /** 풀 스크린 만들기 변수 세팅 */
     lateinit var decorView: View

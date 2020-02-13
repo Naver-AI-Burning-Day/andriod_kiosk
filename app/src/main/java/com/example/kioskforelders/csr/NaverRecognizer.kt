@@ -6,6 +6,10 @@ import android.os.Message
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.kioskforelders.R
+import com.example.kioskforelders.data.request.requestOrder
+import com.example.kioskforelders.data.response.responseOrder
+import com.example.kioskforelders.server.ServiceImplement
+import com.example.kioskforelders.server.SingletonData
 import com.naver.speech.clientapi.SpeechConfig
 import com.naver.speech.clientapi.SpeechConfig.EndPointDetectType
 import com.naver.speech.clientapi.SpeechConfig.LanguageType
@@ -13,6 +17,9 @@ import com.naver.speech.clientapi.SpeechRecognitionException
 import com.naver.speech.clientapi.SpeechRecognitionListener
 import com.naver.speech.clientapi.SpeechRecognitionResult
 import com.naver.speech.clientapi.SpeechRecognizer
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 //import retrofit2.Retrofit
 
@@ -97,6 +104,27 @@ class NaverRecognizer : SpeechRecognitionListener{
         Log.d(TAG, "Event occurred : Inactive")
         val msg = Message.obtain(mHandler, R.id.clientInactive)
         msg.sendToTarget()
+
+        /** 사용자 발성 완료 후 CSR로 추출된 텍스트를 서버로 보내기 (서버 통신)
+         * --> body에 userId와 CSR로 추출된 데이터를 보냄 */
+//        val call: Call<responseOrder> = ServiceImplement.service.requestOrder(requestOrder(
+//            SingletonData.userId, csrResult
+//        ))
+//        call.enqueue(
+//            object : Callback<responseOrder>{
+//                override fun onFailure(call: Call<responseOrder>, t: Throwable) {
+//                    Log.d("requestOrder 서버 통신 ", "실패")
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<responseOrder>,
+//                    response: Response<responseOrder>
+//                ) {
+//                    Log.d("requestOrder 서버 통신 ", "성공")
+//                    Log.d("requestOrder 서버 통신 ", response.body()?.toString())
+//                }
+//            }
+//        )
     }
 
     @WorkerThread

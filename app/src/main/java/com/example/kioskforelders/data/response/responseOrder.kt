@@ -1,5 +1,5 @@
 package com.example.kioskforelders.data.response
 
-data class responseStart (
+data class responseOrder (
     val id: Int
 )

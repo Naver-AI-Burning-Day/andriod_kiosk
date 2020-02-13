@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.menu_fragment1.*
 import kotlinx.android.synthetic.main.menu_fragment2.*
 
 class MenuFragment2 : Fragment() {
@@ -20,7 +19,7 @@ class MenuFragment2 : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tv2.text = "하이1"
+
     }
 
 }

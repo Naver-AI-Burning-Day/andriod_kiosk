@@ -1,5 +1,7 @@
 package com.example.kioskforelders.server
 
+import com.example.kioskforelders.data.request.requestOrder
+import com.example.kioskforelders.data.response.responseOrder
 import com.example.kioskforelders.data.response.responseStart
 import retrofit2.Call
 import retrofit2.http.Body
@@ -11,7 +13,7 @@ interface apiInterface {
     @GET("/first")
     fun requestrUserId(): Call<responseStart>
 
-    // CSR 추출 텍스트 보내기
-//    @POST("/send")
-//    fun requestOrder(@Body userId: requestOrder)
+    //CSR 추출 텍스트 보내기
+    @POST("/send")
+    fun requestOrder(@Body body: requestOrder): Call<responseOrder>
 }

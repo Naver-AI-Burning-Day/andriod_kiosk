@@ -27,11 +27,11 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".Ordersuccess"
+            android:name=".OrdersuccessActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Ordercheck"
+            android:name=".OrdercheckActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
         <activity
