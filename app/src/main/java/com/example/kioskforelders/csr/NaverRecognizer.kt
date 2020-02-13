@@ -56,7 +56,7 @@ class NaverRecognizer : SpeechRecognitionListener{
             mRecognizer.recognize(
                 SpeechConfig(
                     LanguageType.KOREAN,
-                    EndPointDetectType.HYBRID
+                    EndPointDetectType.AUTO
                 )
             )
         } catch (e: SpeechRecognitionException) {
@@ -70,8 +70,6 @@ class NaverRecognizer : SpeechRecognitionListener{
         val msg = Message.obtain(mHandler, R.id.finalResult, finalResult)
         msg.sendToTarget()
         csrResult = finalResult?.results?.get(0).toString()
-
-
 
     }
 

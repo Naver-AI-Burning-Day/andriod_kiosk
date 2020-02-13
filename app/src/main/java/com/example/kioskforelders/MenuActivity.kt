@@ -1,38 +1,35 @@
 package com.example.kioskforelders
 
-import android.annotation.SuppressLint
-import android.content.Intent
+
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.activity_menu.*
+
 
 /** CSR에 사용되는 것들 */
-import android.app.Activity
 import android.os.Environment
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.view.MotionEvent
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.example.kioskforelders.csr.AudioWriterPCM
 import com.example.kioskforelders.csr.NaverRecognizer
 import com.naver.speech.clientapi.SpeechConfig.EndPointDetectType
 import com.naver.speech.clientapi.SpeechRecognitionResult
+import kotlinx.android.synthetic.main.activity_menu.*
 import java.lang.ref.WeakReference
-import java.util.List
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
-/************************/
+
+
 
 class MenuActivity : AppCompatActivity(){
 
+    /** Veiw Pager 관련 세팅 */
+    private val adapter by lazy { FragmentAdapter(supportFragmentManager) }
+
+    /** CSR 관련 세팅 */
     private val TAG = MainActivity::class.java.simpleName
     private val CLIENT_ID = "0q5uu7pl8k"
     private var strResult: String? = null
@@ -88,7 +85,8 @@ class MenuActivity : AppCompatActivity(){
 
             R.id.endPointDetectTypeSelected -> {
                 isEpdTypeSelected = true
-                currentEpdType = msg.obj as EndPointDetectType
+                //currentEpdType = msg.obj as EndPointDetectType
+                currentEpdType = EndPointDetectType.AUTO
                 if (currentEpdType === EndPointDetectType.AUTO) {
                     Toast.makeText(this, "AUTO epd type is selected.", Toast.LENGTH_SHORT).show()
                 } else if (currentEpdType === EndPointDetectType.MANUAL) {
@@ -101,7 +99,9 @@ class MenuActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        viewPager.adapter = MainActivity@adapter
         initNaverRecognizer()
+
 
 
     }

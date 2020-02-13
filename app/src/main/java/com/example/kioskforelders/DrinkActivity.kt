@@ -5,20 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 
-class Ordersuccess : AppCompatActivity() {
+class DrinkActivity : AppCompatActivity() {
+
 
     /** 풀 스크린 만들기 변수 세팅 */
     lateinit var decorView: View
     var uiOption: Int = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_drink)
+    }
+
     override fun onResume() {
         super.onResume()
         deleteStatusBar()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ordersuccess)
     }
 
     /** 풀 스크린 만들기 */

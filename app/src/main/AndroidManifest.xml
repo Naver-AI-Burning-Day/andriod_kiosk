@@ -14,7 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".drinkActivity"></activity>
+        <activity android:name=".MenuFragment1"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".MenuFragment2"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".MenuFragment3"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".DrinkActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".Ordersuccess"
             android:configChanges="orientation|keyboardHidden"
