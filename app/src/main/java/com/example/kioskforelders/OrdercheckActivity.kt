@@ -23,6 +23,13 @@ import android.media.AudioAttributes
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import sun.jvm.hotspot.utilities.IntArray
+import jdk.nashorn.internal.objects.NativeFunction.call
+
+
 
 
 
@@ -89,6 +96,7 @@ class OrdercheckActivity : AppCompatActivity() {
     private fun initializeMediaPlayer(url: String) {
         Thread(Runnable{
             val player = MediaPlayer()
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC)
             player.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -98,6 +106,7 @@ class OrdercheckActivity : AppCompatActivity() {
 
             try {
                 //change with setDataSource(Context,Uri);
+                player.release()
                 player.reset()
                 player.setDataSource(this, Uri.parse(url))
                 //player.setDisplay(surfaceHolder)
