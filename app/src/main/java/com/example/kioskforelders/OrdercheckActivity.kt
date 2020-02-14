@@ -72,16 +72,19 @@ class OrdercheckActivity : AppCompatActivity() {
                                 response: Response<responseMP3>
                             ) {
                                 initializeMediaPlayer(response.body()?.link.toString())
-//                                val uri: Uri = Uri.parse(response.body()?.link)
-//                                try {
-//                                    mediaPlayer.reset()
-//                                    mediaPlayer.setDataSource(this@OrdercheckActivity, uri)
-//                                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-//                                    mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
-//                                    mediaPlayer.start()
-//                                } catch (e: IOException) {
-//                                    e.printStackTrace()
-//                                }
+                                val uri: Uri = Uri.parse(response.body()?.link)
+                                Log.i("mt body",response.body()?.link.toString())
+                                Log.i("mt uri",uri.toString());
+                                try {
+                                    mediaPlayer.reset()
+                                    mediaPlayer.setDataSource(this@OrdercheckActivity, uri)
+
+                                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                                    mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                                    mediaPlayer.start()
+                                } catch (e: IOException) {
+                                    e.printStackTrace()
+                                }
                             }
                         }
                     )

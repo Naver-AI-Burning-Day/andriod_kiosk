@@ -168,7 +168,7 @@ class MenuActivity : AppCompatActivity(){
                                 break
                             }
                         }
-                        
+
                          */
                     } catch (e: IOException) {
                         e.printStackTrace()
