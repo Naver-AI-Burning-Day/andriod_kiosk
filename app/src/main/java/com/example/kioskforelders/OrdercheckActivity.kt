@@ -87,31 +87,34 @@ class OrdercheckActivity : AppCompatActivity() {
     }
 
     private fun initializeMediaPlayer(url: String) {
-        val player = MediaPlayer()
-        player.setAudioAttributes(
-            AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build()
-        )
+        Thread(Runnable{
+            val player = MediaPlayer()
+            player.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
 
-        try {
-            //change with setDataSource(Context,Uri);
-            player.reset()
-            player.setDataSource(this, Uri.parse(url))
-            //player.setDisplay(surfaceHolder)
-            player.prepareAsync()
-            player.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-                //mp.start();
-                player.start()
-            })
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+            try {
+                //change with setDataSource(Context,Uri);
+                player.reset()
+                player.setDataSource(this, Uri.parse(url))
+                //player.setDisplay(surfaceHolder)
+                player.prepareAsync()
+                player.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+                    //mp.start();
+                    player.start()
+                })
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        })
+
 
     }
 
