@@ -20,6 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import android.media.AudioAttributes
+import kotlinx.android.synthetic.main.activity_ordercheck.*
 
 
 class OrdercheckActivity : AppCompatActivity() {
@@ -38,10 +39,15 @@ class OrdercheckActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ordercheck)
 
         // 주문 확인 UI 데이터 세팅
+        tv_orderCheckActivity_burgurNm.text = SingletonData.menu0
+        tv_orderCheckActivity_burgurCount.text = SingletonData.count0.toString()
+        tv_orderCheckActivity_burgurPrice.text = SingletonData.price0.toString()
 
+        tv_orderCheckActivity_drinkNm.text = SingletonData.menu1
+        tv_orderCheckActivity_drinkCount.text = SingletonData.count1.toString()
+        tv_orderCheckActivity_drinkPrice.text = SingletonData.price1.toString()
 
-
-
+        tv_totalPrice.text = (SingletonData.count0*SingletonData.price0 + SingletonData.count1*SingletonData.price1).toString()
 
 
 

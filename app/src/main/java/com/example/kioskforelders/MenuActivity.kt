@@ -149,7 +149,7 @@ class MenuActivity : AppCompatActivity(){
                                 naverRecognizer.getSpeechRecognizer().stop()
                             }
                         }
-                        
+
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
