@@ -36,6 +36,7 @@ class NaverRecognizer : SpeechRecognitionListener{
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var csrResult: String
     var context: Context
+    lateinit var checkOrderData: responseOrder
 
     constructor(context: Context, handler: Handler, clientId: String) {
         this.mHandler = handler
@@ -127,7 +128,7 @@ class NaverRecognizer : SpeechRecognitionListener{
                     response: Response<responseOrder>
                 ) {
                     Log.d("requestOrder 서버 통신 ", "성공")
-
+                    //checkOrderData = response.body()
                     val intent = Intent(context, OrdercheckActivity::class.java)
                     context.startActivity(intent)
                 }

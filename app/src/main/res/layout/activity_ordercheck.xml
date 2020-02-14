@@ -50,9 +50,76 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
-        android:text="빅맥"
+        android:text="불고기 버거"
         android:textSize="30sp"
         android:textColor="#707070"
         android:fontFamily="@font/americanol"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_drink"
+        app:layout_constraintStart_toStartOf="@+id/iv_orderCheckActivity_bilge"
+        app:layout_constraintTop_toBottomOf="@+id/tv_orderCheckActivity_burgur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="40dp"
+        android:text="불고기 버거"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_burgurCount"
+        app:layout_constraintLeft_toRightOf="@+id/tv_orderCheckActivity_burgur"
+        app:layout_constraintTop_toTopOf="@+id/iv_orderCheckActivity_bilge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="2개"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_drinkCount"
+        app:layout_constraintLeft_toRightOf="@+id/tv_orderCheckActivity_drink"
+        app:layout_constraintTop_toBottomOf="@+id/tv_orderCheckActivity_burgurCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="40dp"
+        android:text="2개"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_burgerPrice"
+        app:layout_constraintLeft_toRightOf="@+id/tv_orderCheckActivity_burgurCount"
+        app:layout_constraintTop_toTopOf="@+id/iv_orderCheckActivity_bilge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="11,800원"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
+
+    <TextView
+        android:id="@+id/tv_orderCheckActivity_drinkPrice"
+        app:layout_constraintLeft_toRightOf="@+id/tv_orderCheckActivity_drinkCount"
+        app:layout_constraintTop_toTopOf="@+id/tv_orderCheckActivity_burgurCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="40dp"
+        android:text="11,800원"
+        android:textSize="30sp"
+        android:textColor="#707070"
+        android:fontFamily="@font/americanol"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

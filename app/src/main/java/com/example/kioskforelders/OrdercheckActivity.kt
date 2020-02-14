@@ -48,6 +48,15 @@ class OrdercheckActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ordercheck)
 
+        // 주문 확인 UI 데이터 세팅
+
+
+
+
+
+
+
+        /** 주문 확인 요청 (서버 통신) */
         val call: Call<responseFinal> = ServiceImplement.service.requestFinal(requestFinal(SingletonData.userId) )
         call.enqueue(
             object : Callback<responseFinal> {
