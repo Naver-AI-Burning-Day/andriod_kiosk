@@ -127,7 +127,7 @@ class NaverRecognizer : SpeechRecognitionListener{
                     response: Response<responseOrder>
                 ) {
                     Log.d("requestOrder 서버 통신 ", "성공")
-                    Log.d("chohee", context.toString())
+
                     val intent = Intent(context, OrdercheckActivity::class.java)
                     context.startActivity(intent)
                 }

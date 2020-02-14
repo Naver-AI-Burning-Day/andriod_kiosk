@@ -15,6 +15,7 @@ import com.example.kioskforelders.data.response.responseMP3
 import com.example.kioskforelders.data.response.responseStart
 import com.example.kioskforelders.server.ServiceImplement
 import com.example.kioskforelders.server.SingletonData
+import com.example.kioskforelders.server.SingletonData.mediaPlayer
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MP3서버" , response.body().toString())
                     val uri: Uri = Uri.parse(response.body()?.link)
                     try {
-                        val mediaPlayer = MediaPlayer()
+                        mediaPlayer.reset()
                         mediaPlayer.setDataSource(this@MainActivity, uri)
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
                         mediaPlayer.prepare() //don't use prepareAsync for mp3 playback

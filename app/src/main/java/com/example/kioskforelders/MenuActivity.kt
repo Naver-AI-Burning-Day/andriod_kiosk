@@ -21,6 +21,8 @@ import com.example.kioskforelders.csr.NaverRecognizer
 import com.example.kioskforelders.data.request.requestMP3
 import com.example.kioskforelders.data.response.responseMP3
 import com.example.kioskforelders.server.ServiceImplement
+import com.example.kioskforelders.server.SingletonData
+import com.example.kioskforelders.server.SingletonData.mediaPlayer
 import com.naver.speech.clientapi.SpeechConfig.EndPointDetectType
 import com.naver.speech.clientapi.SpeechRecognitionResult
 import kotlinx.android.synthetic.main.activity_menu.*
@@ -114,7 +116,7 @@ class MenuActivity : AppCompatActivity(){
         viewPager.adapter = MainActivity@adapter
 
         // "오늘의 추천 버거는~" 실행
-        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3("오늘의 추천메뉴는 슈슈버거와 불고기버거 입니다"))
+        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3("오늘의 추천메뉴는 슈슈버거와 불고기버거 입니다 주문하실 메뉴를 말씀해주세요"))
         call.enqueue(
             object : Callback<responseMP3> {
                 override fun onFailure(call: Call<responseMP3>, t: Throwable) {
@@ -129,11 +131,12 @@ class MenuActivity : AppCompatActivity(){
                     Log.d("MP3서버" , response.body().toString())
                     val uri: Uri = Uri.parse(response.body()?.link)
                     try {
-                        val mediaPlayer = MediaPlayer()
+                        mediaPlayer.reset()
                         mediaPlayer.setDataSource(this@MenuActivity, uri)
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
                         mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
                         mediaPlayer.start()
+
 
                         // "추천버거 소리" 끝나면 녹음 시작
                         while(true){

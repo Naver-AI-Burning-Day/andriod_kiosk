@@ -14,10 +14,17 @@ import com.example.kioskforelders.data.response.responseFinal
 import com.example.kioskforelders.data.response.responseMP3
 import com.example.kioskforelders.server.ServiceImplement
 import com.example.kioskforelders.server.SingletonData
+import com.example.kioskforelders.server.SingletonData.mediaPlayer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import android.media.AudioAttributes
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class OrdercheckActivity : AppCompatActivity() {
 
@@ -47,6 +54,7 @@ class OrdercheckActivity : AppCompatActivity() {
                 ) {
                     Log.d("서버 통신 성공 여부" , "성공!")
                     /** 주문 확인 CPV 요청 (서버 요청) */
+                    Log.d("MP3서버" , response.body()?.text)
                     val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3(response.body()?.text))
                     call.enqueue(
                         object : Callback<responseMP3> {
@@ -58,16 +66,17 @@ class OrdercheckActivity : AppCompatActivity() {
                                 call: Call<responseMP3>,
                                 response: Response<responseMP3>
                             ) {
-                                val uri: Uri = Uri.parse(response.body()?.link)
-                                try {
-                                    val mediaPlayer = MediaPlayer()
-                                    mediaPlayer.setDataSource(this@OrdercheckActivity, uri)
-                                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                                    mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
-                                    mediaPlayer.start()
-                                } catch (e: IOException) {
-                                    e.printStackTrace()
-                                }
+                                initializeMediaPlayer(response.body()?.link.toString())
+//                                val uri: Uri = Uri.parse(response.body()?.link)
+//                                try {
+//                                    mediaPlayer.reset()
+//                                    mediaPlayer.setDataSource(this@OrdercheckActivity, uri)
+//                                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+//                                    mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+//                                    mediaPlayer.start()
+//                                } catch (e: IOException) {
+//                                    e.printStackTrace()
+//                                }
                             }
                         }
                     )
@@ -75,6 +84,34 @@ class OrdercheckActivity : AppCompatActivity() {
             }
         )
 
+    }
+
+    private fun initializeMediaPlayer(url: String) {
+        val player = MediaPlayer()
+        player.setAudioAttributes(
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build()
+        )
+
+        try {
+            //change with setDataSource(Context,Uri);
+            player.reset()
+            player.setDataSource(this, Uri.parse(url))
+            //player.setDisplay(surfaceHolder)
+            player.prepareAsync()
+            player.setOnPreparedListener(MediaPlayer.OnPreparedListener {
+                //mp.start();
+                player.start()
+            })
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        } catch (e: IllegalStateException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
 
     }
 
