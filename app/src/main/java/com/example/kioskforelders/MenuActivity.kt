@@ -130,29 +130,30 @@ class MenuActivity : AppCompatActivity(){
                     Log.d("MP3서버" , "성공!")
                     Log.d("MP3서버" , response.body().toString())
                     val uri: Uri = Uri.parse(response.body()?.link)
-                    try {
-                        Thread(Runnable {
-                            mediaPlayer.reset()
-                            mediaPlayer.setDataSource(this@MenuActivity, uri)
-                            //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                            mediaPlayer.prepareAsync() //don't use prepareAsync for mp3 playback
-                            mediaPlayer.start()
 
-                            // "추천버거 소리" 끝나면 녹음 시작
-                            mediaPlayer.setOnCompletionListener {
-                                initNaverRecognizer()
-                                naverRecognizer.getSpeechRecognizer().initialize()
+                    mediaPlayer.reset()
+                    mediaPlayer.setDataSource(this@MenuActivity, uri)
+                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                    mediaPlayer.prepareAsync() //don't use prepareAsync for mp3 playback
+                    mediaPlayer.start()
 
-                                if (!naverRecognizer.getSpeechRecognizer().isRunning) {
-                                    // Run SpeechRecongizer by calling recognize().
-                                    strResult = ""
-                                    isEpdTypeSelected = false
-                                    naverRecognizer.recognize()
-                                }else{
-                                    Log.d(TAG, "stop and wait Final Result")
-                                    naverRecognizer.getSpeechRecognizer().stop()
-                                }
-                            }
+                    // "추천버거 소리" 끝나면 녹음 시작
+                   mediaPlayer.setOnCompletionListener {
+                       initNaverRecognizer()
+                       naverRecognizer.getSpeechRecognizer().initialize()
+
+                       if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+                           // Run SpeechRecongizer by calling recognize().
+                           strResult = ""
+                           isEpdTypeSelected = false
+                           naverRecognizer.recognize()
+                       }else{
+                           Log.d(TAG, "stop and wait Final Result")
+                           naverRecognizer.getSpeechRecognizer().stop()
+                       }
+                   }
+
+
                             /*
                             while(true){
                                 if(mediaPlayer.isPlaying == false){
@@ -173,11 +174,7 @@ class MenuActivity : AppCompatActivity(){
                             }
 
                              */
-                        })
 
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
                 }
             }
         )
