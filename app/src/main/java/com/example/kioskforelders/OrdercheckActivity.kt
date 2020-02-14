@@ -20,6 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import android.media.AudioAttributes
+import androidx.core.view.isInvisible
 import kotlinx.android.synthetic.main.activity_ordercheck.*
 
 
@@ -38,21 +39,45 @@ class OrdercheckActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ordercheck)
 
-        // 주문 확인 UI 데이터 세팅
-        tv_orderCheckActivity_burgurNm.text = SingletonData.menu0
-        tv_orderCheckActivity_burgurCount.text = SingletonData.count0.toString()
-        tv_orderCheckActivity_burgurPrice.text = SingletonData.price0.toString()
+        // 주문 확인 UI 데이터
+        if(SingletonData.menu0 == null) {
+            tv_orderCheckActivity_burgurNm.text = "주문 없음"
+        }else{
+            tv_orderCheckActivity_burgurNm.text = SingletonData.menu0
+        }
+        if(SingletonData.count0 == null){
+            tv_orderCheckActivity_burgurCount.text = "0개"
+        }else{
+            tv_orderCheckActivity_burgurCount.text = SingletonData.count0.toString() + "개"
+        }
+        if(SingletonData.price0 == null){
+            tv_orderCheckActivity_burgurPrice.text = "0원"
+        }else{
+            tv_orderCheckActivity_burgurPrice.text = SingletonData.price0.toString() + "원"
+        }
 
-        tv_orderCheckActivity_drinkNm.text = SingletonData.menu1
-        tv_orderCheckActivity_drinkCount.text = SingletonData.count1.toString()
-        tv_orderCheckActivity_drinkPrice.text = SingletonData.price1.toString()
-
-        tv_totalPrice.text = (SingletonData.count0*SingletonData.price0 + SingletonData.count1*SingletonData.price1).toString()
+        if(SingletonData.menu1 == null){
+            tv_orderCheckActivity_drinkNm.isInvisible = false
+        }else{
+            tv_orderCheckActivity_drinkNm.text = SingletonData.menu1
+        }
+        if(SingletonData.count1 == null){
+            tv_orderCheckActivity_drinkCount.isInvisible = false
+        }else{
+            tv_orderCheckActivity_drinkCount.text = SingletonData.count1.toString() + "개"
+        }
+        if(SingletonData.price1 == null){
+            tv_orderCheckActivity_drinkPrice.isInvisible = false
+        }else{
+            tv_orderCheckActivity_drinkPrice.text = SingletonData.price1.toString() + "원"
+        }
+        tv_totalPrice.text = SingletonData.total.toString()
 
 
 
         /** 주문 확인 요청 (서버 통신) */
         val call: Call<responseFinal> = ServiceImplement.service.requestFinal(requestFinal(SingletonData.userId) )
+        Log.i("idx Checking",ServiceImplement.service.requestFinal(requestFinal(SingletonData.userId)).toString())
         call.enqueue(
             object : Callback<responseFinal> {
                 override fun onFailure(call: Call<responseFinal>, t: Throwable) {
@@ -64,6 +89,7 @@ class OrdercheckActivity : AppCompatActivity() {
                     response: Response<responseFinal>
                 ) {
                     Log.d("서버 통신 성공 여부" , "성공!")
+
                     /** 주문 확인 CPV 요청 (서버 요청) */
                     Log.d("MP3서버" , response.body()?.text)
                     val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3(response.body()?.text))
@@ -89,7 +115,15 @@ class OrdercheckActivity : AppCompatActivity() {
                                     mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
                                     mediaPlayer.start()
                                 } catch (e: IOException) {
+                                    //e.printStackTrace()
+                                    mediaPlayer.reset()
+                                    mediaPlayer.setDataSource(this@OrdercheckActivity, uri)
+
+                                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                                    mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                                    mediaPlayer.start()
                                     e.printStackTrace()
+
                                 }
                             }
                         }

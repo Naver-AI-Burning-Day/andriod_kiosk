@@ -129,6 +129,13 @@ class NaverRecognizer : SpeechRecognitionListener{
                 ) {
                     Log.d("requestOrder 서버 통신 ", "성공")
                     //checkOrderData = response.body()
+                    SingletonData.menu0 = response.body()?.menu0.toString()
+                    SingletonData.count0 = response.body()?.count0
+                    SingletonData.price0 = response.body()?.price0
+                    SingletonData.menu1 = response.body()?.menu1.toString()
+                    SingletonData.count1 = response.body()?.count1
+                    SingletonData.price1 = response.body()?.price1
+                    SingletonData.total = response.body()?.total
                     val intent = Intent(context, OrdercheckActivity::class.java)
                     context.startActivity(intent)
                 }

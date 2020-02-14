@@ -28,4 +28,8 @@ interface apiInterface {
     //마지막 주문 확인 요청
     @POST("/final")
     fun requestFinal(@Body body: requestFinal) : Call<responseFinal>
+
+    //주문 여부 확인 요청
+    @POST("/final/check")
+    fun requestOrderWant(@Body body: requestFinal) : Call<responseFinal>
 }

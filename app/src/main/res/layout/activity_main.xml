@@ -64,6 +64,16 @@
         android:layout_height="120dp"
         android:src="@drawable/img_click"/>
 
+    <ImageView
+        android:id="@+id/iv_mainActivity_highlight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_mainActivity_click"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/img_hithlighting"/>
+
     <TextView
         android:id="@+id/tv_mainActivity_click"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,13 +88,6 @@
         android:textColor="#000000"
         android:fontFamily="@font/americanol"/>
 
-    <ImageView
-        android:id="@+id/iv_mainActivity_highlight"
-        app:layout_constraintStart_toStartOf="@+id/tv_mainActivity_click"
-        app:layout_constraintTop_toTopOf="@+id/tv_mainActivity_click"
-        android:layout_width="350dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/img_hithlighting"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
