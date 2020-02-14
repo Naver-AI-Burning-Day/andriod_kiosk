@@ -54,8 +54,6 @@ class MenuActivity : AppCompatActivity(){
     /** 풀 스크린 만들기 변수 세팅 */
     lateinit var decorView: View
     var uiOption: Int = 0
-
-    // Handle speech recognition Messages.
     private fun handleMessage(msg: Message) {
         when (msg.what) {
             R.id.clientReady -> {
@@ -131,33 +129,30 @@ class MenuActivity : AppCompatActivity(){
                     Log.d("MP3서버" , response.body().toString())
                     val uri: Uri = Uri.parse(response.body()?.link)
 
-                    mediaPlayer.reset()
-                    mediaPlayer.setDataSource(this@MenuActivity, uri)
-                    //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                    mediaPlayer.prepareAsync() //don't use prepareAsync for mp3 playback
-                    mediaPlayer.start()
+                    try {
+                        mediaPlayer.reset()
+                        mediaPlayer.setDataSource(this@MenuActivity, uri)
+                        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                        mediaPlayer.start()
+                        mediaPlayer.setOnCompletionListener {
+                            initNaverRecognizer()
+                            naverRecognizer.getSpeechRecognizer().initialize()
 
-
-
-                            while(true){
-                                if(mediaPlayer.isPlaying == false){
-                                    initNaverRecognizer()
-                                    naverRecognizer.getSpeechRecognizer().initialize()
-
-                                    if (!naverRecognizer.getSpeechRecognizer().isRunning) {
-                                        // Run SpeechRecongizer by calling recognize().
-                                        strResult = ""
-                                        isEpdTypeSelected = false
-                                        naverRecognizer.recognize()
-                                    }else{
-                                        Log.d(TAG, "stop and wait Final Result")
-                                        naverRecognizer.getSpeechRecognizer().stop()
-                                    }
-                                    break
-                                }
+                            if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+                                // Run SpeechRecongizer by calling recognize().
+                                strResult = ""
+                                isEpdTypeSelected = false
+                                naverRecognizer.recognize()
+                            }else{
+                                Log.d(TAG, "stop and wait Final Result")
+                                naverRecognizer.getSpeechRecognizer().stop()
                             }
-
-
+                        }
+                        
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
 
                 }
             }
