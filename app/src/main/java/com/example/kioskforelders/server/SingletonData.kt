@@ -20,5 +20,8 @@ object SingletonData {
     var count1: Int? = -1    //음료 개수
     var price1: Int? = -1    //음료 가격
     var total: Int? = -1     //전체 가격
+
+    // 메뉴 리턴시 사용값
+    var menuReturn = false
 }
 

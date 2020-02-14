@@ -7,5 +7,6 @@ data class responseOrder (
     val price0: Int?,
     val menu1: String?,
     val count1: Int?,
-    val price1: Int?
+    val price1: Int?,
+    val status: String
 )

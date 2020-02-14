@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import androidx.annotation.WorkerThread
 import androidx.core.content.ContextCompat.startActivity
 import com.example.kioskforelders.MenuActivity
 import com.example.kioskforelders.OrdercheckActivity
+import com.example.kioskforelders.OrdersuccessActivity
 import com.example.kioskforelders.R
 import com.example.kioskforelders.data.request.requestOrder
 import com.example.kioskforelders.data.response.responseOrder
@@ -128,16 +130,31 @@ class NaverRecognizer : SpeechRecognitionListener{
                     response: Response<responseOrder>
                 ) {
                     Log.d("requestOrder 서버 통신 ", "성공")
-                    //checkOrderData = response.body()
-                    SingletonData.menu0 = response.body()?.menu0.toString()
-                    SingletonData.count0 = response.body()?.count0
-                    SingletonData.price0 = response.body()?.price0
-                    SingletonData.menu1 = response.body()?.menu1.toString()
-                    SingletonData.count1 = response.body()?.count1
-                    SingletonData.price1 = response.body()?.price1
-                    SingletonData.total = response.body()?.total
-                    val intent = Intent(context, OrdercheckActivity::class.java)
-                    context.startActivity(intent)
+
+                    // 최종 주문 여부 확인일 경우
+                    if(response.body()?.status == "Ok"){
+                        SingletonData.mediaPlayer.setOnCompletionListener {  }
+                        val intent = Intent(context, OrdersuccessActivity::class.java)
+                        context.startActivity(intent)
+                    }else if(response.body()?.status == "Return"){
+                        SingletonData.menuReturn = true
+                        val intent = Intent(context, MenuActivity::class.java)
+                        context.startActivity(intent)
+                    }else{
+                        SingletonData.menu0 = response.body()?.menu0.toString()
+                        SingletonData.count0 = response.body()?.count0
+                        SingletonData.price0 = response.body()?.price0
+                        SingletonData.menu1 = response.body()?.menu1.toString()
+                        Log.i("checkMenu",SingletonData.menu1);
+                        if(SingletonData.equals(null)){
+                            Log.i("check","이거슨 널");
+                        }
+                        SingletonData.count1 = response.body()?.count1
+                        SingletonData.price1 = response.body()?.price1
+                        SingletonData.total = response.body()?.total
+                        val intent = Intent(context, OrdercheckActivity::class.java)
+                        context.startActivity(intent)
+                    }
                 }
             }
         )

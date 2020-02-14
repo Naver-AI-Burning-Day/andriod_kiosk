@@ -40,34 +40,24 @@ class OrdercheckActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ordercheck)
 
         // 주문 확인 UI 데이터
-        if(SingletonData.menu0 == null) {
-            tv_orderCheckActivity_burgurNm.text = "주문 없음"
+        tv_orderCheckActivity_burgurNm.text = SingletonData.menu0
+        tv_orderCheckActivity_burgurCount.text = SingletonData.count0.toString() + "개"
+        tv_orderCheckActivity_burgurPrice.text = SingletonData.price0.toString() + "원"
+        if(SingletonData.menu1==null || SingletonData.menu1 === null|| SingletonData.menu1.equals(null)||SingletonData.menu1.equals("")|| SingletonData.menu1.equals("null")) {
+            tv_orderCheckActivity_drinkNm.text = " "
+        }else if(SingletonData.menu1.equals((null))) {
+            tv_orderCheckActivity_drinkNm.text = " "
         }else{
-            tv_orderCheckActivity_burgurNm.text = SingletonData.menu0
-        }
-        if(SingletonData.count0 == null){
-            tv_orderCheckActivity_burgurCount.text = "0개"
-        }else{
-            tv_orderCheckActivity_burgurCount.text = SingletonData.count0.toString() + "개"
-        }
-        if(SingletonData.price0 == null){
-            tv_orderCheckActivity_burgurPrice.text = "0원"
-        }else{
-            tv_orderCheckActivity_burgurPrice.text = SingletonData.price0.toString() + "원"
-        }
-
-        if(SingletonData.menu1 == null){
-            tv_orderCheckActivity_drinkNm.isInvisible = false
-        }else{
+            Log.i("test",SingletonData.menu1.toString());
             tv_orderCheckActivity_drinkNm.text = SingletonData.menu1
         }
         if(SingletonData.count1 == null){
-            tv_orderCheckActivity_drinkCount.isInvisible = false
+            tv_orderCheckActivity_drinkCount.text = " "
         }else{
             tv_orderCheckActivity_drinkCount.text = SingletonData.count1.toString() + "개"
         }
         if(SingletonData.price1 == null){
-            tv_orderCheckActivity_drinkPrice.isInvisible = false
+            tv_orderCheckActivity_drinkPrice.text = " "
         }else{
             tv_orderCheckActivity_drinkPrice.text = SingletonData.price1.toString() + "원"
         }

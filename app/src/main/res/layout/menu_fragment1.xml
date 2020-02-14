@@ -207,14 +207,14 @@
 
                 <TextView
                     android:id="@+id/tv_menuActivity_t2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="새우"
-                    android:textSize="20sp"
+                    android:layout_width="27dp"
+                    android:layout_height="14dp"
+                    android:fontFamily="@font/americanol"
+                    android:text="불고기"
                     android:textColor="#FD0505"
-                    android:fontFamily="@font/americanol"/>
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     app:layout_constraintBottom_toBottomOf="@+id/tv_menuActivity_t2"
@@ -242,7 +242,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="매콤 달콤"
+                    android:text="달콤"
                     android:textSize="20sp"
                     android:textColor="#FD0505"
                     android:fontFamily="@font/americanol"/>

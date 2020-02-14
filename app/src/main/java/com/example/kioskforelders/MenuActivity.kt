@@ -114,7 +114,11 @@ class MenuActivity : AppCompatActivity(){
         viewPager.adapter = MainActivity@adapter
 
         // "오늘의 추천 버거는~" 실행
-        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3("오늘의 추천메뉴는 슈슈버거와 불고기버거 입니다 주문하실 메뉴를 말씀해주세요"))
+        var text: String = "오늘의 추천메뉴는 슈슈버거와 불고기버거 입니다 주문하실 메뉴를 말씀해주세요"
+        if(SingletonData.menuReturn == true){
+            text = "주문을 다시 해주세요"
+        }
+        val call: Call<responseMP3> = ServiceImplement.service.requestMP3(requestMP3(text))
         call.enqueue(
             object : Callback<responseMP3> {
                 override fun onFailure(call: Call<responseMP3>, t: Throwable) {
@@ -150,6 +154,11 @@ class MenuActivity : AppCompatActivity(){
                             }
                         }
                     } catch (e: IOException) {
+                        mediaPlayer.reset()
+                        mediaPlayer.setDataSource(this@MenuActivity, uri)
+                        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        mediaPlayer.prepare() //don't use prepareAsync for mp3 playback
+                        mediaPlayer.start()
                         e.printStackTrace()
                     }
 
