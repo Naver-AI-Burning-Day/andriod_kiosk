@@ -128,6 +128,7 @@ class MenuActivity : AppCompatActivity(){
                     Log.d("MP3서버" , "성공!")
                     Log.d("MP3서버" , response.body().toString())
                     val uri: Uri = Uri.parse(response.body()?.link)
+
                     try {
                         mediaPlayer.reset()
                         mediaPlayer.setDataSource(this@MenuActivity, uri)
@@ -148,6 +149,7 @@ class MenuActivity : AppCompatActivity(){
                                 naverRecognizer.getSpeechRecognizer().stop()
                             }
                         }
+<<<<<<< HEAD
 
                         /*
                         // "추천버거 소리" 끝나면 녹음 시작
@@ -170,9 +172,13 @@ class MenuActivity : AppCompatActivity(){
                         }
 
                          */
+=======
+                        
+>>>>>>> cfd64e812c545f9225d0a6803619321f9daddfe5
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
+
                 }
             }
         )
