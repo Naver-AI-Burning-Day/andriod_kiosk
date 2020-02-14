@@ -138,8 +138,22 @@ class MenuActivity : AppCompatActivity(){
                             mediaPlayer.prepareAsync() //don't use prepareAsync for mp3 playback
                             mediaPlayer.start()
 
-
                             // "추천버거 소리" 끝나면 녹음 시작
+                            mediaPlayer.setOnCompletionListener {
+                                initNaverRecognizer()
+                                naverRecognizer.getSpeechRecognizer().initialize()
+
+                                if (!naverRecognizer.getSpeechRecognizer().isRunning) {
+                                    // Run SpeechRecongizer by calling recognize().
+                                    strResult = ""
+                                    isEpdTypeSelected = false
+                                    naverRecognizer.recognize()
+                                }else{
+                                    Log.d(TAG, "stop and wait Final Result")
+                                    naverRecognizer.getSpeechRecognizer().stop()
+                                }
+                            }
+                            /*
                             while(true){
                                 if(mediaPlayer.isPlaying == false){
                                     initNaverRecognizer()
@@ -157,6 +171,8 @@ class MenuActivity : AppCompatActivity(){
                                     break
                                 }
                             }
+
+                             */
                         })
 
                     } catch (e: IOException) {
